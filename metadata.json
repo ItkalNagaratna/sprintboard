@@ -1,0 +1,5 @@
+{
+  "name": "SprintBoard",
+  "description": "A high-performance Kanban Task Management Dashboard inspired by Linear.app, featuring drag-and-drop, complex state management, and a professional dark aesthetic.",
+  "requestFramePermissions": []
+}
