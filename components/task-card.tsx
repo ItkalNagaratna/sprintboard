@@ -19,14 +19,16 @@ export const TaskCard = React.memo(({ task, index, onView }: TaskCardProps & { i
   const { deleteTask } = useBoardStore();
 
   useEffect(() => {
-    setMounted(true);
+    // Break the synchronous render cycle to avoid cascading renders
+    const timer = setTimeout(() => setMounted(true), 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const priorityColors = {
     Low: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
     Medium: 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20',
     High: 'bg-red-500/10 text-red-400 border-red-500/20',
-  };
+  } as const;
 
   const formattedDate = mounted
     ? new Date(task.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
@@ -83,13 +85,14 @@ export const TaskCard = React.memo(({ task, index, onView }: TaskCardProps & { i
           <div className="flex items-center justify-between pt-3 border-t border-slate-800/40">
             <div className="flex items-center gap-2.5">
               <div className="relative">
-                <div className="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-700 shadow-sm">
+                <div className="w-6 h-6 rounded-lg bg-slate-800 flex items-center justify-center overflow-hidden border border-slate-700 shadow-sm relative">
                   {task.assignee?.avatar ? (
                     <img
                       src={task.assignee.avatar}
                       alt={task.assignee.name}
+                      width={24}
+                      height={24}
                       className="w-full h-full object-cover"
-                      referrerPolicy="no-referrer"
                     />
                   ) : (
                     <span className="text-[10px] text-slate-400 font-bold">
