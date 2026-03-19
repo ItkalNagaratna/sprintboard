@@ -5,7 +5,8 @@
 **A high-performance, dark-mode Kanban board and Automation Workflow builder.**  
 Drag. Drop. Connect. Ship.
 
-![SprintBoard Workflow](public/screenshots/workflow.png)
+![SprintBoard Kanban Board](public/screenshot.png)
+![SprintBoard Workflow Builder](public/screenshots/workflow.png)
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
@@ -18,24 +19,13 @@ Drag. Drop. Connect. Ship.
 
 ## ✨ Features
 
-- 🗂 **Kanban Board** — Three-column layout: **Todo → In Progress → Completed**
+- 🗂 **Kanban Board** — Three-column productivity management: **Todo → In Progress → Completed**
 - ⚡ **Workflow Builder** — Drag nodes onto a canvas, click ports to connect, and build complex automation logic
 - 🖱 **Drag & Drop** — Smooth task reordering powered by `@hello-pangea/dnd`
 - 🧠 **Logic Branching** — "If/Else" and "Switch" nodes with designated **TRUE/FALSE** output ports
 - 📋 **Task Details Modal** — Click any card to see full details in a beautiful slide-up panel
 - 🔍 **Search & Priority Filter** — Instantly search tasks or filter by Low / Medium / High priority
 - 🌑 **Dark Mode First** — Sleek `slate-950` base with indigo accents and glassmorphism UI
-- 💾 **Persistent State** — All board data and workflows survive refreshes via Zustand persistence
-
----
-
-## 🖼 Preview
-
-### 1. High-Performance Kanban Board
-![SprintBoard Kanban](public/screenshots/kanban.png)
-
-### 2. Automation Workflow Builder
-![SprintBoard Workflow](public/screenshots/workflow.png)
 
 ---
 
