@@ -1,0 +1,13 @@
+import { Board } from '@/components/board';
+import { Sidebar } from '@/components/sidebar';
+
+export default function MyTasks() {
+    return (
+        <div className="flex min-h-screen bg-slate-950">
+            <Sidebar />
+            <main className="flex-1 overflow-hidden">
+                <Board />
+            </main>
+        </div>
+    );
+}

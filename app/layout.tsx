@@ -11,6 +11,9 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'SprintBoard | Project Management',
   description: 'High-performance Kanban Task Management',
+  icons: {
+    icon: '/favicon.png',
+  },
 };
 
 export default function RootLayout({

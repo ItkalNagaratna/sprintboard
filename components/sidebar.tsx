@@ -22,6 +22,8 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { useBoardStore } from '@/hooks/use-board-store';
 import { clsx } from 'clsx';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const WORKSPACES = [
   { id: 'kore', name: 'Kore', label: 'WORKSPACE', color: 'bg-indigo-600', initial: 'K', active: true },
@@ -53,10 +55,13 @@ export function Sidebar() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
+  const pathname = usePathname();
+
   const navItems = [
-    { icon: Home, label: 'Home', active: false },
-    { icon: CheckCircle2, label: 'My Tasks', active: true },
-    { icon: Bell, label: 'Inbox', active: false, badge: 3 },
+    { icon: Home, label: 'Home', href: '/', active: pathname === '/' },
+    { icon: CheckCircle2, label: 'My Tasks', href: '/tasks', active: pathname === '/tasks' },
+    { icon: Bell, label: 'Inbox', href: '/inbox', active: pathname === '/inbox', badge: 3 },
+    { icon: Zap, label: 'Workflow', href: '/workflow', active: pathname === '/workflow' },
   ];
 
   const projects = [
@@ -71,32 +76,32 @@ export function Sidebar() {
 
       {/* ── Workspace Header with dropdown ── */}
       <div ref={workspaceRef} className="relative px-3 pt-3 pb-2">
-        <button
-          onClick={() => setIsWorkspaceOpen((v) => !v)}
-          className="w-full flex items-center justify-between p-2 rounded-xl hover:bg-slate-900 transition-colors group"
-        >
-          <div className="flex items-center gap-2.5">
-            <div className={clsx('w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-sm shadow-lg', activeWorkspace.color)}>
-              {activeWorkspace.initial}
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setIsWorkspaceOpen((v) => !v)}
+            className="flex-1 flex items-center justify-between p-2 rounded-xl hover:bg-slate-900 transition-colors group"
+          >
+            <div className="flex items-center gap-2.5">
+              <div className={clsx('w-8 h-8 rounded-lg flex items-center justify-center font-bold text-white text-sm shadow-lg', activeWorkspace.color)}>
+                {activeWorkspace.initial}
+              </div>
+              <div className="flex flex-col items-start overflow-hidden">
+                <span className="text-sm font-semibold text-slate-100 leading-tight truncate w-24 text-left">{activeWorkspace.name}</span>
+                <span className="text-[9px] text-slate-500 font-medium uppercase tracking-widest">{activeWorkspace.label}</span>
+              </div>
             </div>
-            <div className="flex flex-col items-start">
-              <span className="text-sm font-semibold text-slate-100 leading-tight">{activeWorkspace.name}</span>
-              <span className="text-[9px] text-slate-500 font-medium uppercase tracking-widest">{activeWorkspace.label}</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-1">
             <ChevronDown
               size={14}
               className={clsx('text-slate-500 group-hover:text-slate-300 transition-all duration-200', isWorkspaceOpen && 'rotate-180')}
             />
-            <button
-              onClick={(e) => { e.stopPropagation(); setSidebarOpen(false); }}
-              className="lg:hidden p-1 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded transition-colors"
-            >
-              <X size={16} />
-            </button>
-          </div>
-        </button>
+          </button>
+          <button
+            onClick={(e) => { e.stopPropagation(); setSidebarOpen(false); }}
+            className="lg:hidden p-1.5 text-slate-500 hover:text-slate-300 hover:bg-slate-800 rounded-lg transition-colors"
+          >
+            <X size={16} />
+          </button>
+        </div>
 
         {/* Workspace Dropdown */}
         <AnimatePresence>
@@ -152,8 +157,9 @@ export function Sidebar() {
       <nav className="flex-1 overflow-y-auto px-2 py-2 space-y-5">
         <div className="space-y-0.5">
           {navItems.map((item) => (
-            <button
+            <Link
               key={item.label}
+              href={item.href}
               className={clsx(
                 'w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm font-medium transition-all',
                 item.active ? 'bg-indigo-500/10 text-indigo-400' : 'text-slate-400 hover:bg-slate-900 hover:text-slate-200'
@@ -168,7 +174,7 @@ export function Sidebar() {
                   {item.badge}
                 </span>
               )}
-            </button>
+            </Link>
           ))}
         </div>
 
