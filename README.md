@@ -5,7 +5,7 @@
 **A high-performance, dark-mode Kanban board and Automation Workflow builder.**  
 Drag. Drop. Connect. Ship.
 
-![SprintBoard Home Page](HomePage.png)
+![SprintBoard Home Page](public/HomePage.png)
 ![SprintBoard Kanban Board](public/screenshot.png)
 ![SprintBoard Workflow Builder](public/screenshots/workflow.png)
 
