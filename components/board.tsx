@@ -64,18 +64,6 @@ export const Board = () => {
     });
   }, [board.tasks, searchQuery, priorityFilter]);
 
-  // ── Stats derived from board ──
-  const allTasks = Object.values(board.tasks);
-  const totalTasks = allTasks.length;
-  const inProgressTasks = allTasks.filter(t => t.status === 'In Progress').length;
-  const doneTasks = allTasks.filter(t => t.status === 'Done').length;
-  const highPriorityTasks = allTasks.filter(t => t.priority === 'High').length;
-  const completionPct = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
-
-  // ── Greeting ──
-  const hour = new Date().getHours();
-  const greeting = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
-  const dateLabel = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
@@ -144,97 +132,6 @@ export const Board = () => {
 
       {/* Board Content */}
       <main className="flex-1 overflow-auto p-3 sm:p-4 md:p-6">
-
-        {/* ── Welcome Banner ── */}
-        {mounted && (
-          <div className="mb-5 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-sm overflow-hidden">
-            {/* Top gradient accent bar */}
-            <div className="h-0.5 w-full bg-gradient-to-r from-indigo-500 via-violet-500 to-fuchsia-500" />
-
-            <div className="px-5 py-4">
-              {/* Greeting row */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                <div>
-                  <p className="text-[11px] font-semibold text-slate-500 uppercase tracking-widest mb-0.5">{dateLabel}</p>
-                  <h2 className="text-lg font-bold text-slate-100 leading-tight">
-                    {greeting}, <span className="text-indigo-400">Kai</span> 👋
-                  </h2>
-                  <p className="text-xs text-slate-400 mt-0.5">
-                    You have <span className="font-semibold text-slate-200">{inProgressTasks} task{inProgressTasks !== 1 ? 's' : ''}</span> in progress and{' '}
-                    <span className="font-semibold text-slate-200">{allTasks.filter(t => t.status === 'Todo').length} todo</span> waiting.
-                  </p>
-                </div>
-
-                {/* Sprint progress */}
-                <div className="sm:w-56 shrink-0">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Sprint Progress</span>
-                    <span className="text-xs font-bold text-indigo-400">{completionPct}%</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500 transition-all duration-700"
-                      style={{ width: `${completionPct}%` }}
-                    />
-                  </div>
-                  <p className="text-[10px] text-slate-600 mt-1">{doneTasks} of {totalTasks} tasks completed</p>
-                </div>
-              </div>
-
-              {/* Stat cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
-                {[
-                  {
-                    label: 'Total Tasks',
-                    value: totalTasks,
-                    icon: '📋',
-                    color: 'text-slate-300',
-                    bg: 'bg-slate-800/60',
-                    border: 'border-slate-700/50',
-                  },
-                  {
-                    label: 'In Progress',
-                    value: inProgressTasks,
-                    icon: '⚡',
-                    color: 'text-amber-400',
-                    bg: 'bg-amber-500/5',
-                    border: 'border-amber-500/20',
-                  },
-                  {
-                    label: 'Completed',
-                    value: doneTasks,
-                    icon: '✅',
-                    color: 'text-emerald-400',
-                    bg: 'bg-emerald-500/5',
-                    border: 'border-emerald-500/20',
-                  },
-                  {
-                    label: 'High Priority',
-                    value: highPriorityTasks,
-                    icon: '🔥',
-                    color: 'text-rose-400',
-                    bg: 'bg-rose-500/5',
-                    border: 'border-rose-500/20',
-                  },
-                ].map(({ label, value, icon, color, bg, border }) => (
-                  <div
-                    key={label}
-                    className={clsx(
-                      'flex items-center gap-3 px-3.5 py-2.5 rounded-xl border transition-all duration-200 hover:scale-[1.02] cursor-default',
-                      bg, border
-                    )}
-                  >
-                    <span className="text-xl leading-none">{icon}</span>
-                    <div>
-                      <p className={clsx('text-xl font-bold leading-tight', color)}>{value}</p>
-                      <p className="text-[10px] text-slate-500 font-medium mt-0.5">{label}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {mounted && (
           <DragDropContext onDragEnd={onDragEnd}>
