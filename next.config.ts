@@ -1,9 +1,13 @@
 import type { NextConfig } from 'next';
 
+const isProduction = process.env.GITHUB_ACTIONS === 'true';
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: 'export',
-  basePath: '/sprintboard',
+  ...(isProduction && {
+    output: 'export',
+    basePath: '/sprintboard',
+  }),
   images: {
     unoptimized: true,
     remotePatterns: [
