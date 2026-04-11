@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
   ...(isProduction && {
     output: 'export',
     basePath: '/sprintboard',
+    trailingSlash: true,
   }),
   images: {
     unoptimized: true,
